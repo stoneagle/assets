@@ -1,16 +1,16 @@
 package main
 
 import (
-	"fmt"
+	"assets/bitmex"
+	"assets/tushare"
 
-	"assets/data"
-
-	"gopkg.in/gin-gonic/gin.v1"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	fmt.Println("test")
 	r := gin.Default()
-	r.GET("/ping", data.Ping)
-	r.Run(":6565")
+	r.GET("/ping", tushare.Ping)
+	r.GET("/announcement", bitmex.NewAnnouncementAPI().GetList)
+	r.GET("/apikey", bitmex.NewAPIKeyAPI().GetList)
+	r.Run(":8000")
 }
