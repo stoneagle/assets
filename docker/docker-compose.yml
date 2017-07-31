@@ -11,23 +11,23 @@ services:
     ports:
       - "8086:8086"
       # - "8083:8083"
-  # assest:
-  #   image: golang-beego:1.6.4
-  #   container_name: ${COMPOSE_PROJECT_NAME}-${DEV_USER}-golang
-  #   volumes:
-  #     # 挂载项目代码目录
-  #     - ../../assets:/go/src/assets
-  #   working_dir: /go/src/assets
-  #   entrypoint: 
-  #     - bee
-  #     - run
-  #   # links:
-  #   #   # 关联容器, 在该容器中可以通过 `fpm.localhost` 域名访问另一个容器的端口
-  #   #   - fpm:fpm.localhost
-  #   ports:
-  #     - "${DEV_PORT}:8000"
-  #   networks:
-  #     - default
+  assest:
+    image: golang-beego:1.6.4
+    container_name: ${COMPOSE_PROJECT_NAME}-${DEV_USER}-golang
+    volumes:
+      # 挂载项目代码目录
+      - ../../assets:/go/src/assets
+    working_dir: /go/src/assets
+    entrypoint: 
+      - bee
+      - run
+    links:
+      # 关联容器, 在该容器中可以通过 `fpm.localhost` 域名访问另一个容器的端口
+      - influxdb:influxdb.localhost
+    ports:
+      - "${DEV_PORT}:8000"
+    networks:
+      - default
 networks:
   default:
     external:
