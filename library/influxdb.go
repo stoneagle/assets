@@ -13,7 +13,7 @@ const (
 	// TushareDB 数据库名
 	TushareDB = "tushare"
 	username  = "wuzhongyang"
-	password  = "z8590431@wzy-360"
+	password  = "a1b2c3d4E"
 )
 
 // InfluxdbAPI 对象

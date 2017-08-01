@@ -6,11 +6,11 @@ services:
     image: influxdb:1.2.4
     container_name: ${COMPOSE_PROJECT_NAME}-${DEV_USER}-influxdb
     volumes:
-      - /home/wuzhongyang/database/influxdb:/var/lib/influxdb
+      - ../_storage/influxdb:/var/lib/influxdb
       - ./influxdb.conf:/etc/influxdb/influxdb.conf
     ports:
       - "8086:8086"
-      # - "8083:8083"
+      - "8083:8083"
   assest:
     image: golang-beego:1.6.4
     container_name: ${COMPOSE_PROJECT_NAME}-${DEV_USER}-golang
