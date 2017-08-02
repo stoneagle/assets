@@ -1,0 +1,7 @@
+FROM django:1.10
+
+RUN pip install tushare 
+RUN pip install --index https://pypi.mirrors.ustc.edu.cn/simple/ lxml 
+RUN pip install --index https://pypi.mirrors.ustc.edu.cn/simple/ pandas 
+RUN pip install --index https://pypi.mirrors.ustc.edu.cn/simple/ requests
+RUN pip install --index https://pypi.mirrors.ustc.edu.cn/simple/ bs4 

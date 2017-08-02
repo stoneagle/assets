@@ -6,11 +6,11 @@ GROUP := $(shell id -g)
 PROJECT := assets
 
 run-web: 
-	cd docker && sudo docker-compose -p "$(PROJECT)-$(USER)" up
+	cd hack && sudo docker-compose -p "$(PROJECT)-$(USER)" up
 stop-web: 
-	cd docker && sudo docker-compose -p "$(PROJECT)-$(USER)" stop 
+	cd hack && sudo docker-compose -p "$(PROJECT)-$(USER)" stop 
 rm-web: 
-	cd docker && sudo docker-compose -p "$(PROJECT)-$(USER)" rm 
+	cd hack && sudo docker-compose -p "$(PROJECT)-$(USER)" rm 
 
 ag-ng: 
 	docker run -it --rm \
@@ -26,3 +26,11 @@ ag-npm:
 		-w /app \
 		alexsuch/angular-cli:v1.1.3 \
 		npm $(cmd)
+
+django:
+	docker run -it --rm \
+		-u $(USER):$(GROUP) \
+		-v $(PWD)/web/django:/usr/src/app \
+		-w /usr/src/app \
+		django:1.10 \
+		django-admin $(cmd)

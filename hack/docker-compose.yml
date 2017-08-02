@@ -1,5 +1,20 @@
 version: '2'
 services:
+  django:
+    # environment:
+    #   - INFLUXDB_ADMIN_ENABLED=true
+    image: django:tushare
+    container_name: ${COMPOSE_PROJECT_NAME}-${DEV_USER}-django
+    volumes:
+      - ../web/django:/usr/src/app
+    working_dir: /usr/src/app
+    entrypoint: 
+      - bash 
+      - entrypoint.sh  
+    exports:
+      - "8000"
+    # ports:
+    #   - "${DEV_PORT}:8000"
   influxdb:
     environment:
       - INFLUXDB_ADMIN_ENABLED=true
