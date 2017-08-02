@@ -12,10 +12,17 @@ stop-web:
 rm-web: 
 	cd docker && sudo docker-compose -p "$(PROJECT)-$(USER)" rm 
 
-ag-cli: 
+ag-ng: 
 	docker run -it --rm \
 		-u $(USER):$(GROUP) \
 		-v $(PWD)/web:/app \
 		-w /app \
 		alexsuch/angular-cli:v1.1.3 \
-		$(cmd)
+		ng $(cmd)
+
+ag-npm: 
+	docker run -it --rm \
+		-v $(PWD)/web:/app \
+		-w /app \
+		alexsuch/angular-cli:v1.1.3 \
+		npm $(cmd)
