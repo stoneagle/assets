@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from django.contrib import admin
-from web.tushare import deal, bank, billboard
+from web.tushare import deal, bank, billboard, classify
 
 
 urlpatterns = [
@@ -25,4 +25,16 @@ urlpatterns = [
     url(r'^billboard/getInstDetail$', billboard.getInstDetail),
     url(r'^billboard/getInstTop$', billboard.getInstTop),
     url(r'^billboard/getTopList$', billboard.getTopList),
+
+    url(r'^classify/getIndustryClassified$', classify.getIndustryClassified),
+    url(r'^classify/getConceptClassified$', classify.getConceptClassified),
+    url(r'^classify/getAreaClassified$', classify.getAreaClassified),
+    url(r'^classify/getSMEClassified$', classify.getSMEClassified),
+    url(r'^classify/getGEMClassified$', classify.getGEMClassified),
+    url(r'^classify/getSTClassified$', classify.getSTClassified),
+    url(r'^classify/getHS300s$', classify.getHS300s),
+    url(r'^classify/getSZ50s$', classify.getSZ50s),
+    url(r'^classify/getZZ500s$', classify.getZZ500s),
+    url(r'^classify/getTerminated$', classify.getTerminated),
+    url(r'^classify/getSuspended$', classify.getSuspended),
 ]
