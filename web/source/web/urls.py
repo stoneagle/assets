@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from django.contrib import admin
-from web.tushare import deal, bank, billboard, classify, company, economic, invest
+from web.tushare import deal, bank, billboard, classify, company, economic, invest, news
 
 
 urlpatterns = [
@@ -68,4 +68,8 @@ urlpatterns = [
     url(r'^invest/getSHMarginsDetail$', invest.getSHMarginsDetail),
     url(r'^invest/getSZMargins$', invest.getSZMargins),
     url(r'^invest/getSZMarginsDetails$', invest.getSZMarginsDetails),
+
+    url(r'^news/getLatestNews$', news.getLatestNews),
+    url(r'^news/getNotices$', news.getNotices),
+    url(r'^news/getGubaSina$', news.getGubaSina),
 ]
