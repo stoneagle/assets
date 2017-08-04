@@ -4,3 +4,4 @@ _storage
 service/tushare
 __pycache__
 .env
+.*swp
