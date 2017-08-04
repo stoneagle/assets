@@ -77,12 +77,8 @@ def getInstTop(request):
 
 
 # 获取最近一个交易日机构席位成交明细统计数据
-# TODO, 该接口会报object of type 'NoneType' has no len()错误
 def getInstDetail(request):
     result = ts.inst_detail()
-    if result is None:
-        ret = fw.formatResponse(vs.ERRNO_TUSHARE, {})
-    else:
-        result = result.to_json(orient='records')
-        ret = fw.formatResponse(vs.ERRNO_OK, json.loads(result))
+    result = result.to_json(orient='records')
+    ret = fw.formatResponse(vs.ERRNO_OK, json.loads(result))
     return HttpResponse(ret)

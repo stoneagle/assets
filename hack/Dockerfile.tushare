@@ -5,4 +5,5 @@ RUN pip install --index https://pypi.mirrors.ustc.edu.cn/simple/ lxml
 RUN pip install --index https://pypi.mirrors.ustc.edu.cn/simple/ pandas 
 RUN pip install --index https://pypi.mirrors.ustc.edu.cn/simple/ requests
 RUN pip install --index https://pypi.mirrors.ustc.edu.cn/simple/ bs4 
-RUN pip install --index https://pypi.mirrors.ustc.edu.cn/simple/ xlrd 
+RUN pip install --index https://pypi.mirrors.ustc.edu.cn/simple/ xlrd
+RUN pip install --index https://pypi.mirrors.ustc.edu.cn/simple/ html5lib
