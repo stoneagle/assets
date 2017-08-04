@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from django.contrib import admin
-from web.tushare import deal, bank, billboard, classify, company
+from web.tushare import deal, bank, billboard, classify, company, economic
 
 
 urlpatterns = [
@@ -45,4 +45,17 @@ urlpatterns = [
     url(r'^company/getGrowthData$', company.getGrowthData),
     url(r'^company/getDebtpayingData$', company.getDebtpayingData),
     url(r'^company/getCashflowData$', company.getCashflowData),
+
+    url(r'^economic/getDepositRate$', economic.getDepositRate),
+    url(r'^economic/getLoanRate$', economic.getLoanRate),
+    url(r'^economic/getRRRRate$', economic.getRRRRate),
+    url(r'^economic/getMoneySupply$', economic.getMoneySupply),
+    url(r'^economic/getMoneySupplyBal$', economic.getMoneySupplyBal),
+    url(r'^economic/getGDPYear$', economic.getGDPYear),
+    url(r'^economic/getGDPQuarter$', economic.getGDPQuarter),
+    url(r'^economic/getGDPFor$', economic.getGDPFor),
+    url(r'^economic/getGDPPull$', economic.getGDPPull),
+    url(r'^economic/getGDPContrib$', economic.getGDPContrib),
+    url(r'^economic/getCPI$', economic.getCPI),
+    url(r'^economic/getPPI$', economic.getPPI),
 ]
