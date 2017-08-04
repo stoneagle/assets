@@ -14,7 +14,7 @@ def formatResponse(code, data):
 def checkParamsEmpty(params):
     ret = True
     for index, key in enumerate(params):
-        if not params[key]:
+        if (not params[key] and params[key] is not False):
             ret = False
             break
     return ret
