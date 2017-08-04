@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from django.contrib import admin
-from web.tushare import deal, bank
+from web.tushare import deal, bank, billboard
 
 
 urlpatterns = [
@@ -13,9 +13,16 @@ urlpatterns = [
     url(r'^deal/getTodayTicks$', deal.getTodayTicks),
     url(r'^deal/getIndex$', deal.getIndex),
     url(r'^deal/getSinaDD$', deal.getSinaDD),
+
     url(r'^bank/getShiborData$', bank.getShiborData),
     url(r'^bank/getShiborMaData', bank.getShiborMaData),
     url(r'^bank/getShiborQuoteData$', bank.getShiborQuoteData),
     url(r'^bank/getLprData$', bank.getLprData),
     url(r'^bank/getLprMaData$', bank.getLprMaData),
+
+    url(r'^billboard/getBrokerTops$', billboard.getBrokerTops),
+    url(r'^billboard/getCapTop', billboard.getCapTop),
+    url(r'^billboard/getInstDetail$', billboard.getInstDetail),
+    url(r'^billboard/getInstTop$', billboard.getInstTop),
+    url(r'^billboard/getTopList$', billboard.getTopList),
 ]
