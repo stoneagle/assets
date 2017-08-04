@@ -16,7 +16,7 @@ def getShiborData(request):
     if (not params or not fw.checkParamsEmpty(params)):
         ret = fw.formatResponse(vs.ERRNO_PARAMS, {})
     else:
-        result = ts.shibor_data(year=params['year'])
+        result = ts.shibor_data(year=str(params['year']))
         if result is None:
             ret = fw.formatResponse(vs.ERRNO_TUSHARE, {})
         else:
@@ -33,7 +33,7 @@ def getShiborQuoteData(request):
     if (not params or not fw.checkParamsEmpty(params)):
         ret = fw.formatResponse(vs.ERRNO_PARAMS, {})
     else:
-        result = ts.shibor_quote_data(year=params['year'])
+        result = ts.shibor_quote_data(year=str(params['year']))
         if result is None:
             ret = fw.formatResponse(vs.ERRNO_TUSHARE, {})
         else:
@@ -50,7 +50,7 @@ def getShiborMaData(request):
     if (not params or not fw.checkParamsEmpty(params)):
         ret = fw.formatResponse(vs.ERRNO_PARAMS, {})
     else:
-        result = ts.shibor_ma_data(year=params['year'])
+        result = ts.shibor_ma_data(year=str(params['year']))
         if result is None:
             ret = fw.formatResponse(vs.ERRNO_TUSHARE, {})
         else:
@@ -67,7 +67,7 @@ def getLprData(request):
     if (not params or not fw.checkParamsEmpty(params)):
         ret = fw.formatResponse(vs.ERRNO_PARAMS, {})
     else:
-        result = ts.lpr_data(year=params['year'])
+        result = ts.lpr_data(year=str(params['year']))
         if result is None:
             ret = fw.formatResponse(vs.ERRNO_TUSHARE, {})
         else:
@@ -84,7 +84,7 @@ def getLprMaData(request):
     if (not params or not fw.checkParamsEmpty(params)):
         ret = fw.formatResponse(vs.ERRNO_PARAMS, {})
     else:
-        result = ts.lpr_ma_data(year=params['year'])
+        result = ts.lpr_ma_data(year=str(params['year']))
         if result is None:
             ret = fw.formatResponse(vs.ERRNO_TUSHARE, {})
         else:
