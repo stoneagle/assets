@@ -162,7 +162,7 @@ def getSZMarginsDetails(request):
     if (not params or not fw.checkParamsEmpty(params)):
         ret = fw.formatResponse(vs.ERRNO_PARAMS, {})
     else:
-        result = ts.sz_margins(date=params['date'])
+        result = ts.sz_margin_details(date=params['date'])
         if result is None:
             ret = fw.formatResponse(vs.ERRNO_TUSHARE, {})
         else:

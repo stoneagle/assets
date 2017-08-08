@@ -1,0 +1,1175 @@
+{
+	"variables": [],
+	"info": {
+		"name": "tushare",
+		"_postman_id": "49fe59bf-d77b-cbff-bbe5-0baf7bd0268b",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/deal/getHistData",
+			"request": {
+				"url": "http://123.207.151.42:8888/getHistData",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "code",
+							"value": "600848",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "ktype",
+							"value": "D",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "start",
+							"value": "2015-01-05",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "end",
+							"value": "2015-01-09",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/deal/getKData",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/getKData",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "code",
+							"value": "600848",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "start",
+							"value": "2015-01-05",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "end",
+							"value": "2015-01-09",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "ktype",
+							"value": "D",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "autype",
+							"value": "qfq",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/deal/getTodayAll",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/getTodayAll",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "code",
+							"value": "600848",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "date",
+							"value": "2014-01-09",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/deal/getTickData",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/getTickData",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "code",
+							"value": "600848",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "date",
+							"value": "2014-01-09",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/deal/getRealtimeQuotes",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/getRealtimeQuotes",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "symbols[]",
+							"value": "000581",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "symbols[]",
+							"value": "600848",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/deal/getTodayTicks",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/getTodayTicks",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "code",
+							"value": "601333",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/deal/getIndex",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/deal/getIndex",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/deal/getSinaDD",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/deal/getSinaDD",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "code",
+							"value": "600848",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "date",
+							"value": "2017-5-24",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "vol",
+							"value": "200",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/bank/getShiborData",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/bank/getShiborData",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "year",
+							"value": "2015",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/bank/getShiborQuoteData",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/bank/getShiborQuoteData",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "year",
+							"value": "2015",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/bank/getShiborMaData",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/bank/getShiborMaData",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "year",
+							"value": "2015",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/bank/getLprData",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/bank/getLprData",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "year",
+							"value": "2015",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/bank/getLprMaData",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/bank/getLprMaData",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "year",
+							"value": "2016",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/billboard/getTopList",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/billboard/getTopList",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "date",
+							"value": "2016-06-06",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/billboard/getCapTop",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/billboard/getCapTop",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "days",
+							"value": "5",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/billboard/getBrokerTops",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/billboard/getBrokerTops",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "days",
+							"value": "5",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/billboard/getInstTop",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/billboard/getInstTop",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "days",
+							"value": "5",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/billboard/getInstDetail",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/billboard/getInstDetail",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/classify/getIndustryClassified",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/classify/getIndustryClassified",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/classify/getConceptClassified",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/classify/getConceptClassified",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/classify/getAreaClassified",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/classify/getAreaClassified",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/classify/getSMEClassified",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/classify/getSMEClassified",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/classify/getGEMClassified",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/classify/getGEMClassified",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/classify/getSTClassified",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/classify/getSTClassified",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/classify/getHS300s",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/classify/getHS300s",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/classify/getSZ50s",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/classify/getSZ50s",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/classify/getZZ500s",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/classify/getZZ500s",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/classify/getTerminated",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/classify/getTerminated",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/classify/getSuspended",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/classify/getSuspended",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/company/getStockBasics",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/company/getStockBasics",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/company/getProfitData",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/company/getProfitData",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "year",
+							"value": "2014",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "season",
+							"value": "3",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/company/getReportData",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/company/getReportData",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "year",
+							"value": "2014",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "season",
+							"value": "3",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/company/getOperationData",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/company/getOperationData",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "year",
+							"value": "2014",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "season",
+							"value": "3",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/company/getGrowthData",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/company/getGrowthData",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "year",
+							"value": "2014",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "season",
+							"value": "3",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/company/getDebtpayingData",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/company/getDebtpayingData",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "year",
+							"value": "2014",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "season",
+							"value": "3",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/company/getCashflowData",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/company/getCashflowData",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "year",
+							"value": "2014",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "season",
+							"value": "3",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/economic/getDepositRate",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/economic/getDepositRate",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/economic/getLoanRate",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/economic/getLoanRate",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/economic/getRRRRate",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/economic/getRRRRate",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/economic/getMoneySupply",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/economic/getMoneySupply",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/economic/getMoneySupplyBal",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/economic/getMoneySupplyBal",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/economic/getGDPYear",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/economic/getGDPYear",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/economic/getGDPQuarter",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/economic/getGDPQuarter",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/economic/getGDPFor",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/economic/getGDPFor",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/economic/getGDPPull",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/economic/getGDPPull",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/economic/getGDPContrib",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/economic/getGDPContrib",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/economic/getCPI",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/economic/getCPI",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/economic/getPPI",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/economic/getPPI",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/news/getLatestNews",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/news/getLatestNews",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "top",
+							"value": "3",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "content",
+							"value": "true",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/news/getNotices",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/news/getNotices",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "code",
+							"value": "601668",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "date",
+							"value": "2017-8-3",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/news/getGubaSina",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/news/getGubaSina",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "content",
+							"value": "true",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/invest/getProfitData",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/invest/getProfitData",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "year",
+							"value": "2014",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "top",
+							"value": "3",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/invest/getForecastData",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/invest/getForecastData",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "year",
+							"value": "2014",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "season",
+							"value": "3",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/invest/getXSGData",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/invest/getXSGData",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "year",
+							"value": "2014",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "month",
+							"value": "2",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/invest/getFundHoldings",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/invest/getFundHoldings",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "year",
+							"value": "2014",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "season",
+							"value": "3",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/invest/getNewStocks",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/invest/getNewStocks",
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/invest/getSHMargins",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/invest/getSHMargins",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "start",
+							"value": "2015-01-01",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "end",
+							"value": "2015-04-19",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/invest/getSHMarginsDetail",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/invest/getSHMarginsDetail",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "date",
+							"value": "2015-03-05",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "symbol",
+							"value": "601989",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "start",
+							"value": "2015-03-01",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "end",
+							"value": "2015-04-19",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/invest/getSZMargins",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/invest/getSZMargins",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "start",
+							"value": "2015-01-01",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "end",
+							"value": "2015-01-10",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{tencent}}:{{asset-port}}/invest/getSZMarginsDetails",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/invest/getSZMarginsDetails",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "date",
+							"value": "2015-04-20",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
