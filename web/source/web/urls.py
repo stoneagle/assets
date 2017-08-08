@@ -1,0 +1,75 @@
+from django.conf.urls import url
+from django.contrib import admin
+from web.tushare import deal, bank, billboard, classify, company, economic, invest, news
+
+
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^deal/getHistData$', deal.getHistData),
+    url(r'^deal/getKData$', deal.getKData),
+    url(r'^deal/getTodayAll$', deal.getTodayAll),
+    url(r'^deal/getTickData$', deal.getTickData),
+    url(r'^deal/getRealtimeQuotes$', deal.getRealtimeQuotes),
+    url(r'^deal/getTodayTicks$', deal.getTodayTicks),
+    url(r'^deal/getIndex$', deal.getIndex),
+    url(r'^deal/getSinaDD$', deal.getSinaDD),
+
+    url(r'^bank/getShiborData$', bank.getShiborData),
+    url(r'^bank/getShiborMaData', bank.getShiborMaData),
+    url(r'^bank/getShiborQuoteData$', bank.getShiborQuoteData),
+    url(r'^bank/getLprData$', bank.getLprData),
+    url(r'^bank/getLprMaData$', bank.getLprMaData),
+
+    url(r'^billboard/getBrokerTops$', billboard.getBrokerTops),
+    url(r'^billboard/getCapTop', billboard.getCapTop),
+    url(r'^billboard/getInstDetail$', billboard.getInstDetail),
+    url(r'^billboard/getInstTop$', billboard.getInstTop),
+    url(r'^billboard/getTopList$', billboard.getTopList),
+
+    url(r'^classify/getIndustryClassified$', classify.getIndustryClassified),
+    url(r'^classify/getConceptClassified$', classify.getConceptClassified),
+    url(r'^classify/getAreaClassified$', classify.getAreaClassified),
+    url(r'^classify/getSMEClassified$', classify.getSMEClassified),
+    url(r'^classify/getGEMClassified$', classify.getGEMClassified),
+    url(r'^classify/getSTClassified$', classify.getSTClassified),
+    url(r'^classify/getHS300s$', classify.getHS300s),
+    url(r'^classify/getSZ50s$', classify.getSZ50s),
+    url(r'^classify/getZZ500s$', classify.getZZ500s),
+    url(r'^classify/getTerminated$', classify.getTerminated),
+    url(r'^classify/getSuspended$', classify.getSuspended),
+
+    url(r'^company/getStockBasics$', company.getStockBasics),
+    url(r'^company/getReportData$', company.getReportData),
+    url(r'^company/getProfitData$', company.getProfitData),
+    url(r'^company/getOperationData$', company.getOperationData),
+    url(r'^company/getGrowthData$', company.getGrowthData),
+    url(r'^company/getDebtpayingData$', company.getDebtpayingData),
+    url(r'^company/getCashflowData$', company.getCashflowData),
+
+    url(r'^economic/getDepositRate$', economic.getDepositRate),
+    url(r'^economic/getLoanRate$', economic.getLoanRate),
+    url(r'^economic/getRRRRate$', economic.getRRRRate),
+    url(r'^economic/getMoneySupply$', economic.getMoneySupply),
+    url(r'^economic/getMoneySupplyBal$', economic.getMoneySupplyBal),
+    url(r'^economic/getGDPYear$', economic.getGDPYear),
+    url(r'^economic/getGDPQuarter$', economic.getGDPQuarter),
+    url(r'^economic/getGDPFor$', economic.getGDPFor),
+    url(r'^economic/getGDPPull$', economic.getGDPPull),
+    url(r'^economic/getGDPContrib$', economic.getGDPContrib),
+    url(r'^economic/getCPI$', economic.getCPI),
+    url(r'^economic/getPPI$', economic.getPPI),
+
+    url(r'^invest/getProfitData$', invest.getProfitData),
+    url(r'^invest/getForecastData$', invest.getForecastData),
+    url(r'^invest/getXSGData$', invest.getXSGData),
+    url(r'^invest/getFundHoldings$', invest.getFundHoldings),
+    url(r'^invest/getNewStocks$', invest.getNewStocks),
+    url(r'^invest/getSHMargins$', invest.getSHMargins),
+    url(r'^invest/getSHMarginsDetail$', invest.getSHMarginsDetail),
+    url(r'^invest/getSZMargins$', invest.getSZMargins),
+    url(r'^invest/getSZMarginsDetails$', invest.getSZMarginsDetails),
+
+    url(r'^news/getLatestNews$', news.getLatestNews),
+    url(r'^news/getNotices$', news.getNotices),
+    url(r'^news/getGubaSina$', news.getGubaSina),
+]

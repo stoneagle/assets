@@ -2,3 +2,6 @@ vendor
 _storage
 ./assets
 service/tushare
+__pycache__
+.env
+.*swp
