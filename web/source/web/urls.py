@@ -5,8 +5,8 @@ from web.tushare import deal, bank, billboard, classify, company, economic, inve
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^deal/getHistData$', deal.getHistData),
     url(r'^deal/getKData$', deal.getKData),
+    url(r'^deal/getHistData$', deal.getHistData),
     url(r'^deal/getTodayAll$', deal.getTodayAll),
     url(r'^deal/getTickData$', deal.getTickData),
     url(r'^deal/getRealtimeQuotes$', deal.getRealtimeQuotes),
