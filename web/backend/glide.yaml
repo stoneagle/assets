@@ -1,0 +1,7 @@
+package: assets/web/backend
+import:
+- package: github.com/gin-gonic/gin
+- package: github.com/go-resty/resty
+- package: github.com/influxdata/influxdb
+  subpackages:
+  - client/v2

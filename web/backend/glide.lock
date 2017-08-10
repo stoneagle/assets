@@ -1,0 +1,40 @@
+hash: 111944fb1816b4b024618455abd27d4e08f41406730b2a526b27e11715a7f21d
+updated: 2017-08-10T12:06:48.886149746+08:00
+imports:
+- name: github.com/gin-contrib/sse
+  version: 22d885f9ecc78bf4ee5d72b937e4bbcdc58e8cae
+- name: github.com/gin-gonic/gin
+  version: 81007d2ce0176f7a9ce52dd12e56edd7ef40e72c
+  subpackages:
+  - binding
+  - json
+  - render
+- name: github.com/go-resty/resty
+  version: 6d8c785a63e4b7505c88451cf9c5b452ccf2454c
+- name: github.com/golang/protobuf
+  version: 1909bc2f63dc92bb931deace8b8312c4db72d12f
+  subpackages:
+  - proto
+- name: github.com/influxdata/influxdb
+  version: 6d94714e834092e0eff876a7a9616c14c54d876d
+  subpackages:
+  - client/v2
+  - models
+  - pkg/escape
+- name: github.com/json-iterator/go
+  version: 9c358632dc6eac53a4940b59266c805024e38e37
+- name: github.com/mattn/go-isatty
+  version: fc9e8d8ef48496124e79ae0df75490096eccf6fe
+- name: github.com/ugorji/go
+  version: 5efa3251c7f7d05e5d9704a69a984ec9f1386a40
+  subpackages:
+  - codec
+- name: golang.org/x/net/publicsuffix
+  version: e42485b6e20ae7d2304ec72e535b103ed350cc02
+- name: golang.org/x/sys/unix
+  version: e42485b6e20ae7d2304ec72e535b103ed350cc02
+- name: gopkg.in/go-playground/validator.v8
+  version: 5f1438d3fca68893a817e4a66806cea46a9e4ebf
+- name: gopkg.in/yaml.v2
+  version: 25c4ec802a7d637f88d584ab26798e94ad14c13b
+testImports: []
