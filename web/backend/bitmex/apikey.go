@@ -3,7 +3,7 @@ package bitmex
 // apiKey相关操作
 
 import (
-	"assets/bitmex/resource"
+	"assets/web/backend/bitmex/resource"
 	"encoding/json"
 	"log"
 	"net/url"

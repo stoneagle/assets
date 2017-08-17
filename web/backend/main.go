@@ -19,7 +19,11 @@ func main() {
 
 	r := gin.Default()
 	// r.GET("/announcement", bitmex.NewAnnouncementAPI().GetList)
-	r.GET("/bank/getShibor/:year", ts.NewBankAPI().GetShibor)
-	r.POST("/deal/getKData/:code", ts.NewDealAPI().GetKData)
+	v1 := r.Group("/v1")
+	{
+		// v1Deal.POST("/getKData", ts.NewDealAPI().GetKData)
+		v1.POST("/deal/:gateway", ts.NewDealAPI().GateWay)
+		v1.POST("/bank/:gateway", ts.NewBankAPI().GateWay)
+	}
 	r.Run(":8000")
 }

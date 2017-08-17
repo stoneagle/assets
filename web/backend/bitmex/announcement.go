@@ -3,7 +3,7 @@ package bitmex
 // 公告栏相关
 
 import (
-	"assets/bitmex/resource"
+	"assets/web/backend/bitmex/resource"
 	"encoding/json"
 	"net/url"
 
