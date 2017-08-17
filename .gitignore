@@ -2,6 +2,8 @@ vendor
 _storage
 ./assets
 service/tushare
+web/backend/log
+web/backend/backend
 __pycache__
 .env
 .*swp

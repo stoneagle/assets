@@ -1,8 +1,33 @@
 {
-	"ImportPath": "assets",
+	"ImportPath": "assets/web/backend",
 	"GoVersion": "go1.8",
 	"GodepVersion": "v79",
 	"Deps": [
+		{
+			"ImportPath": "github.com/cihub/seelog",
+			"Comment": "v2.6-31-gf561c5e",
+			"Rev": "f561c5e57575bb1e0a2167028b7339b3a8d16fb4"
+		},
+		{
+			"ImportPath": "github.com/cihub/seelog/archive",
+			"Comment": "v2.6-31-gf561c5e",
+			"Rev": "f561c5e57575bb1e0a2167028b7339b3a8d16fb4"
+		},
+		{
+			"ImportPath": "github.com/cihub/seelog/archive/gzip",
+			"Comment": "v2.6-31-gf561c5e",
+			"Rev": "f561c5e57575bb1e0a2167028b7339b3a8d16fb4"
+		},
+		{
+			"ImportPath": "github.com/cihub/seelog/archive/tar",
+			"Comment": "v2.6-31-gf561c5e",
+			"Rev": "f561c5e57575bb1e0a2167028b7339b3a8d16fb4"
+		},
+		{
+			"ImportPath": "github.com/cihub/seelog/archive/zip",
+			"Comment": "v2.6-31-gf561c5e",
+			"Rev": "f561c5e57575bb1e0a2167028b7339b3a8d16fb4"
+		},
 		{
 			"ImportPath": "github.com/gin-gonic/gin",
 			"Comment": "v1.1.4-1-gd5b353c",
@@ -17,11 +42,6 @@
 			"ImportPath": "github.com/gin-gonic/gin/render",
 			"Comment": "v1.1.4-1-gd5b353c",
 			"Rev": "d5b353c5d5a560322e6d96121c814115562501f7"
-		},
-		{
-			"ImportPath": "github.com/go-resty/resty",
-			"Comment": "v0.12",
-			"Rev": "7a8134d8718193eb857994adee49d73a302e7718"
 		},
 		{
 			"ImportPath": "github.com/golang/protobuf/proto",
@@ -52,11 +72,11 @@
 			"Rev": "fc9e8d8ef48496124e79ae0df75490096eccf6fe"
 		},
 		{
-			"ImportPath": "golang.org/x/net/context",
-			"Rev": "e4fa1c5465ad6111f206fc92186b8c83d64adbe1"
+			"ImportPath": "github.com/mitchellh/mapstructure",
+			"Rev": "d0303fe809921458f417bcf828397a65db30a7e4"
 		},
 		{
-			"ImportPath": "golang.org/x/net/publicsuffix",
+			"ImportPath": "golang.org/x/net/context",
 			"Rev": "e4fa1c5465ad6111f206fc92186b8c83d64adbe1"
 		},
 		{

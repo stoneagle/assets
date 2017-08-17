@@ -1,8 +1,8 @@
 package bitmex
 
 import (
-	"assets/bitmex/model"
-	"assets/library"
+	"assets/web/backend/bitmex/model"
+	"assets/web/backend/library"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
