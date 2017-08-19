@@ -1,20 +1,18 @@
 version: '2'
 services:
   django:
-    # environment:
-    #   - INFLUXDB_ADMIN_ENABLED=true
     image: django:tushare
     container_name: ${COMPOSE_PROJECT_NAME}-${DEV_USER}-django
     volumes:
-      - ../web/django:/usr/src/app
+      - ../web/source:/usr/src/app
     working_dir: /usr/src/app
     entrypoint: 
       - bash 
       - entrypoint.sh  
-    exports:
+    expose:
       - "8000"
     # ports:
-    #   - "${DEV_PORT}:8000"
+    #   - "${DEV_TS_PORT}:8000"
   influxdb:
     environment:
       - INFLUXDB_ADMIN_ENABLED=true
@@ -22,7 +20,7 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}-${DEV_USER}-influxdb
     volumes:
       - ../_storage/influxdb:/var/lib/influxdb
-      - ./influxdb.conf:/etc/influxdb/influxdb.conf
+      - ./influxdb/influxdb.conf:/etc/influxdb/influxdb.conf
     ports:
       - "8086:8086"
       - "8083:8083"
@@ -31,14 +29,15 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}-${DEV_USER}-golang
     volumes:
       # 挂载项目代码目录
-      - ../../assets:/go/src/assets
-    working_dir: /go/src/assets
+      - ../web/backend:/go/src/assets/web/backend
+    working_dir: /go/src/assets/web/backend
+    # user: "${DEV_UID}"
     entrypoint: 
       - bee
       - run
-    links:
-      # 关联容器, 在该容器中可以通过 `fpm.localhost` 域名访问另一个容器的端口
-      - influxdb:influxdb.localhost
+    # links:
+    #   # 关联容器, 在该容器中可以通过 `fpm.localhost` 域名访问另一个容器的端口
+    #   - influxdb:influxdb.localhost
     ports:
       - "${DEV_PORT}:8000"
     networks:

@@ -5,5 +5,5 @@ service/tushare
 web/backend/log
 web/backend/backend
 __pycache__
-.env
+hack/.env
 .*swp

@@ -10,7 +10,7 @@
 		{
 			"name": "http://{{tencent}}:{{asset-port}}/deal/getHistData",
 			"request": {
-				"url": "http://123.207.151.42:8888/getHistData",
+				"url": "http://123.207.151.42:8888/deal/getHistData",
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -49,7 +49,7 @@
 		{
 			"name": "http://{{tencent}}:{{asset-port}}/deal/getKData",
 			"request": {
-				"url": "http://{{tencent}}:{{asset-port}}/getKData",
+				"url": "http://{{tencent}}:{{asset-port}}/deal/getKData",
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -94,7 +94,7 @@
 		{
 			"name": "http://{{tencent}}:{{asset-port}}/deal/getTodayAll",
 			"request": {
-				"url": "http://{{tencent}}:{{asset-port}}/getTodayAll",
+				"url": "http://{{tencent}}:{{asset-port}}/deal/getTodayAll",
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -119,9 +119,30 @@
 			"response": []
 		},
 		{
+			"name": "http://{{tencent}}:{{asset-port}}/deal/getTodayTicks",
+			"request": {
+				"url": "http://{{tencent}}:{{asset-port}}/deal/getTodayTicks",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "code",
+							"value": "601333",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
 			"name": "http://{{tencent}}:{{asset-port}}/deal/getTickData",
 			"request": {
-				"url": "http://{{tencent}}:{{asset-port}}/getTickData",
+				"url": "http://{{tencent}}:{{asset-port}}/deal/getTickData",
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -148,42 +169,21 @@
 		{
 			"name": "http://{{tencent}}:{{asset-port}}/deal/getRealtimeQuotes",
 			"request": {
-				"url": "http://{{tencent}}:{{asset-port}}/getRealtimeQuotes",
+				"url": "http://{{tencent}}:{{asset-port}}/deal/getRealtimeQuotes",
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
 						{
-							"key": "symbols[]",
+							"key": "symbols",
 							"value": "000581",
 							"description": "",
 							"type": "text"
 						},
 						{
-							"key": "symbols[]",
+							"key": "symbols",
 							"value": "600848",
-							"description": "",
-							"type": "text"
-						}
-					]
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "http://{{tencent}}:{{asset-port}}/deal/getTodayTicks",
-			"request": {
-				"url": "http://{{tencent}}:{{asset-port}}/getTodayTicks",
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "code",
-							"value": "601333",
 							"description": "",
 							"type": "text"
 						}

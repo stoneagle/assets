@@ -99,7 +99,7 @@ def getTickData(request):
 def getRealtimeQuotes(request):
     params = {}
     if request.POST:
-        params['symbols'] = request.POST.getlist('symbols[]')
+        params['symbols'] = request.POST.getlist('symbols')
 
     if (not params or not fw.checkParamsEmpty(params)):
         ret = fw.formatResponse(vs.ERRNO_PARAMS, {})
