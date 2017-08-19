@@ -1,40 +1,109 @@
 package tushare
 
 import (
+	"assets/web/backend/library"
+	"assets/web/backend/tushare/resource"
+	"net/url"
+
+	"github.com/cihub/seelog"
 	"github.com/gin-gonic/gin"
+	"github.com/mitchellh/mapstructure"
 )
 
-// 获取上市公司基本情况
-func getStockBasic(c *gin.Context) {
+const (
+	StockBasic    = "StockBasic"
+	CompanyProfit = "Profit"
+	CompanyReport = "Report"
+	Operation     = "Operation"
+	Growth        = "Growth"
+	Cashflow      = "Cashflow"
+	DebtPaying    = "DebtPaying"
+)
 
+type CompanyAPI struct {
+	Config Configuration
 }
 
-// 获取业绩报告
-func getReport(c *gin.Context) {
-
+func NewCompanyAPI() *CompanyAPI {
+	config := NewConfig()
+	return &CompanyAPI{
+		Config: *config,
+	}
 }
 
-// 获取盈利能力
-func getCompanyProfit(c *gin.Context) {
+// GateWay gin的gate请求控制器
+func (api CompanyAPI) GateWay(c *gin.Context) {
+	gateway := c.Param("gateway")
+	params := url.Values{}
+	var err error
+	result := &ResponseData{}
 
-}
+	switch gateway {
+	// 获取上市公司基本情况
+	case StockBasic:
+		api.Config.UriPath = library.UrlCompanyStockBasic
+		api.Config.DataStruct = &resource.StockBasic{}
+	// 获取盈利能力
+	case CompanyProfit:
+		params.Add("year", c.PostForm("year"))
+		params.Add("season", c.PostForm("season"))
+		api.Config.UriPath = library.UrlCompanyProfit
+		api.Config.DataStruct = &resource.CompanyProfit{}
+	// 获取业绩报告
+	case CompanyReport:
+		params.Add("year", c.PostForm("year"))
+		params.Add("season", c.PostForm("season"))
+		api.Config.UriPath = library.UrlCompanyReport
+		api.Config.DataStruct = &resource.CompanyReport{}
+	// 获取营运能力
+	case Operation:
+		params.Add("year", c.PostForm("year"))
+		params.Add("season", c.PostForm("season"))
+		api.Config.UriPath = library.UrlCompanyOperation
+		api.Config.DataStruct = &resource.Operation{}
+	// 获取成长能力
+	case Growth:
+		params.Add("year", c.PostForm("year"))
+		params.Add("season", c.PostForm("season"))
+		api.Config.UriPath = library.UrlCompanyGrowth
+		api.Config.DataStruct = &resource.Growth{}
+	// 获取现金流量
+	case Cashflow:
+		params.Add("year", c.PostForm("year"))
+		params.Add("season", c.PostForm("season"))
+		api.Config.UriPath = library.UrlCompanyCashflow
+		api.Config.DataStruct = &resource.Cashflow{}
+	// 获取偿债能力
+	case DebtPaying:
+		params.Add("year", c.PostForm("year"))
+		params.Add("season", c.PostForm("season"))
+		api.Config.UriPath = library.UrlCompanyDebt
+		api.Config.DataStruct = &resource.DebtPaying{}
+	default:
+		seelog.Errorf(library.ErrGateway)
+		library.OutputErr(c, err, 401)
+		return
+	}
 
-// 获取营运能力
-func getOperation(c *gin.Context) {
+	api.Config.Params = params
+	result, err = api.Config.doHttp()
 
-}
+	if err != nil {
+		seelog.Errorf("请求失败，err = %+v\n", err)
+		library.OutputErr(c, err, 401)
+		return
+	}
 
-// 获取成长能力
-func getGrowth(c *gin.Context) {
+	data := api.Config.DataStruct
+	err = mapstructure.Decode(result.Data, &data)
+	if err != nil {
+		seelog.Errorf("data转换失败，err = %+v\n", err)
+		library.OutputErr(c, err, 401)
+		return
+	}
 
-}
-
-// 获取偿债能力
-func getDebtpaying(c *gin.Context) {
-
-}
-
-// 获取现金流量
-func getCashflow(c *gin.Context) {
-
+	c.JSON(200, gin.H{
+		"data": data,
+		"msg":  result.Errmsg,
+	})
 }

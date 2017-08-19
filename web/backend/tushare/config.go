@@ -15,13 +15,12 @@ import (
 type ResponseData struct {
 	Errno  string                   `json:"errno"`
 	Errmsg string                   `json:"errmsg"`
-	Data   []map[string]interface{} `json:"data"`
+	Data   []map[string]interface{} `json:"data,omitempty"`
 }
 
-type ResponseFailData struct {
-	Errno  string      `json:"errno"`
-	Errmsg string      `json:"errmsg"`
-	Data   interface{} `json:"data"`
+type ResponseCheck struct {
+	Errno  string `json:"errno"`
+	Errmsg string `json:"errmsg"`
 }
 
 type Configuration struct {
@@ -46,8 +45,11 @@ func (c Configuration) doHttp() (ret *ResponseData, err error) {
 	}
 
 	client := &http.Client{}
-
 	host := c.BasePath + c.UriPath
+
+	seelog.Debug("host:%s", host)
+	seelog.Debug("Params:%v", c.Params)
+
 	req, err := http.NewRequest("POST", host, strings.NewReader(c.Params.Encode()))
 	if err != nil {
 		seelog.Infof("http请求准备失败，url:%s", host)
@@ -69,14 +71,17 @@ func (c Configuration) doHttp() (ret *ResponseData, err error) {
 		return
 	}
 
-	if resp.StatusCode != http.StatusOK {
-		failRet := &ResponseFailData{}
-		err = json.Unmarshal(body, &failRet)
-		if err == nil {
-			err = errors.New("tushare资源错误[" + failRet.Errno + "]:" + failRet.Errmsg)
-		}
-	} else {
+	check := &ResponseCheck{}
+	err = json.Unmarshal(body, &check)
+	if err != nil {
+		seelog.Infof("tushare的check读取失败，ret:%s", string(body))
+		return
+	}
+
+	if check.Errno == "0000" {
 		err = json.Unmarshal(body, &ret)
+	} else {
+		err = errors.New("tushare资源错误[" + check.Errno + "]:" + check.Errmsg)
 	}
 	return
 }
