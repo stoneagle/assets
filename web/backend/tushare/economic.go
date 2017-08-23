@@ -46,50 +46,50 @@ func (api EconomicAPI) GateWay(c *gin.Context) {
 	switch gateway {
 	// 获取存款利率
 	case DepositRate:
-		api.Config.UriPath = library.UrlEconomicDepositRate
+		api.Config.UriPath = library.URLEconomicDepositRate
 		api.Config.DataStruct = &resource.DepositRate{}
 	// 获取贷款利率
 	case LoanRate:
-		api.Config.UriPath = library.UrlEconomicLoanRate
+		api.Config.UriPath = library.URLEconomicLoanRate
 		api.Config.DataStruct = &resource.LoanRate{}
 	// 获取存款准备金率
 	case RRRRate:
-		api.Config.UriPath = library.UrlEconomicRRRRate
+		api.Config.UriPath = library.URLEconomicRRRRate
 		api.Config.DataStruct = &resource.RRRRate{}
 	// 获取货币供应量
 	case MoneySupply:
-		api.Config.UriPath = library.UrlEconomicMoneySupply
+		api.Config.UriPath = library.URLEconomicMoneySupply
 		api.Config.DataStruct = &resource.MoneySupply{}
 	// 获取货币供应量(年底余额)
 	case MoneySupplyBal:
-		api.Config.UriPath = library.UrlEconomicMoneySupplyBal
+		api.Config.UriPath = library.URLEconomicMoneySupplyBal
 		api.Config.DataStruct = &resource.MoneySupplyBal{}
 	// 获取国内生产总值
 	case GDPYear:
-		api.Config.UriPath = library.UrlEconomicGDPYear
+		api.Config.UriPath = library.URLEconomicGDPYear
 		api.Config.DataStruct = &resource.GDPYear{}
 	case GDPQuarter:
-		api.Config.UriPath = library.UrlEconomicGDPQuarter
+		api.Config.UriPath = library.URLEconomicGDPQuarter
 		api.Config.DataStruct = &resource.GDPQuarter{}
 	// 三大需求对GDP的贡献
 	case GDPFor:
-		api.Config.UriPath = library.UrlEconomicGDPFor
+		api.Config.UriPath = library.URLEconomicGDPFor
 		api.Config.DataStruct = &resource.GDPFor{}
 	// 三大产业对Gdp的拉动
 	case GDPPull:
-		api.Config.UriPath = library.UrlEconomicGDPPull
+		api.Config.UriPath = library.URLEconomicGDPPull
 		api.Config.DataStruct = &resource.GDPPull{}
 	// 三大产业贡献率
 	case GDPContrib:
-		api.Config.UriPath = library.UrlEconomicGDPContrib
+		api.Config.UriPath = library.URLEconomicGDPContrib
 		api.Config.DataStruct = &resource.GDPContrib{}
 	// 获取居民消费价格指数
 	case CPI:
-		api.Config.UriPath = library.UrlEconomicCPI
+		api.Config.UriPath = library.URLEconomicCPI
 		api.Config.DataStruct = &resource.CPI{}
 	// 获取工业品出厂价格指数
 	case PPI:
-		api.Config.UriPath = library.UrlEconomicPPI
+		api.Config.UriPath = library.URLEconomicPPI
 		api.Config.DataStruct = &resource.PPI{}
 	default:
 		seelog.Errorf(library.ErrGateway)
@@ -98,7 +98,7 @@ func (api EconomicAPI) GateWay(c *gin.Context) {
 	}
 
 	api.Config.Params = params
-	result, err = api.Config.doHttp()
+	result, err = api.Config.doPost()
 
 	if err != nil {
 		seelog.Errorf("请求失败，err = %+v\n", err)

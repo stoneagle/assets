@@ -39,18 +39,18 @@ func (api NewsAPI) GateWay(c *gin.Context) {
 	case LatestNews:
 		params.Add("top", c.PostForm("top"))
 		params.Add("content", c.DefaultPostForm("content", "false"))
-		api.Config.UriPath = library.UrlNewsLatestNews
+		api.Config.UriPath = library.URLNewsLatestNews
 		api.Config.DataStruct = &resource.LatestNew{}
 	// 获取个股信息地雷
 	case Notices:
 		params.Add("code", c.PostForm("code"))
 		params.Add("date", c.PostForm("date"))
-		api.Config.UriPath = library.UrlNewsNotices
+		api.Config.UriPath = library.URLNewsNotices
 		api.Config.DataStruct = &resource.Notice{}
 	// 获取sina股吧重点消息
 	case SinaGuba:
 		params.Add("content", c.DefaultPostForm("content", "false"))
-		api.Config.UriPath = library.UrlNewsGubaSina
+		api.Config.UriPath = library.URLNewsGubaSina
 		api.Config.DataStruct = &resource.SinaGuba{}
 	default:
 		seelog.Errorf(library.ErrGateway)
@@ -59,7 +59,7 @@ func (api NewsAPI) GateWay(c *gin.Context) {
 	}
 
 	api.Config.Params = params
-	result, err = api.Config.doHttp()
+	result, err = api.Config.doPost()
 
 	if err != nil {
 		seelog.Errorf("请求失败，err = %+v\n", err)

@@ -40,26 +40,26 @@ func (api BillBoardAPI) GateWay(c *gin.Context) {
 	// 获取营业部上榜统计
 	case BrokerTops:
 		params.Add("days", c.PostForm("days"))
-		api.Config.UriPath = library.UrlBillBrokerTops
+		api.Config.UriPath = library.URLBillBrokerTops
 		api.Config.DataStruct = &resource.BrokerTop{}
 	// 获取个股上榜统计
 	case CapTops:
 		params.Add("days", c.PostForm("days"))
-		api.Config.UriPath = library.UrlBillCapTops
+		api.Config.UriPath = library.URLBillCapTops
 		api.Config.DataStruct = &resource.CapTop{}
 	// 获取机构成交明细
 	case InstDetail:
-		api.Config.UriPath = library.UrlBillInstDetail
+		api.Config.UriPath = library.URLBillInstDetail
 		api.Config.DataStruct = &resource.InstDetail{}
 	// 获取机构席位追踪
 	case InstTops:
 		params.Add("days", c.PostForm("days"))
-		api.Config.UriPath = library.UrlBillInstTop
+		api.Config.UriPath = library.URLBillInstTop
 		api.Config.DataStruct = &resource.InstTop{}
 	// 获取龙虎榜列表
 	case TopList:
 		params.Add("date", c.PostForm("date"))
-		api.Config.UriPath = library.UrlBillTopList
+		api.Config.UriPath = library.URLBillTopList
 		api.Config.DataStruct = &resource.TopList{}
 	default:
 		seelog.Errorf(library.ErrGateway)
@@ -68,7 +68,7 @@ func (api BillBoardAPI) GateWay(c *gin.Context) {
 	}
 
 	api.Config.Params = params
-	result, err = api.Config.doHttp()
+	result, err = api.Config.doPost()
 
 	if err != nil {
 		seelog.Errorf("请求失败，err = %+v\n", err)

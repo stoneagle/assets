@@ -37,7 +37,7 @@ func NewConfig() *Configuration {
 	}
 }
 
-func (c Configuration) doHttp() (ret *ResponseData, err error) {
+func (c Configuration) doPost() (ret *ResponseData, err error) {
 	err = library.CheckUrlParams(c.Params)
 	if err != nil {
 		seelog.Infof("参数校验结果，err:%s", err)
@@ -82,6 +82,21 @@ func (c Configuration) doHttp() (ret *ResponseData, err error) {
 		err = json.Unmarshal(body, &ret)
 	} else {
 		err = errors.New("tushare资源错误[" + check.Errno + "]:" + check.Errmsg)
+	}
+	return
+}
+
+func (c Configuration) doGet(host string) (body []byte, err error) {
+	resp, err := http.Get(host)
+	if err != nil {
+		seelog.Infof("req执行失败")
+		return
+	}
+	defer resp.Body.Close()
+	body, err = ioutil.ReadAll(resp.Body)
+	if err != nil {
+		seelog.Infof("ioutil读取失败，url:%s", host)
+		return
 	}
 	return
 }

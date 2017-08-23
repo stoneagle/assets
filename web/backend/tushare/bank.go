@@ -40,27 +40,27 @@ func (api BankAPI) GateWay(c *gin.Context) {
 	// GetShibor 获取shibor拆放利率
 	case Shibor:
 		params.Add("year", c.PostForm("year"))
-		api.Config.UriPath = library.UrlBankShibor
+		api.Config.UriPath = library.URLBankShibor
 		api.Config.DataStruct = &resource.Shibor{}
 	// 获取银行报价数据
 	case ShiborQuote:
 		params.Add("year", c.PostForm("year"))
-		api.Config.UriPath = library.UrlBankShiborQuote
+		api.Config.UriPath = library.URLBankShiborQuote
 		api.Config.DataStruct = &resource.ShiborQuote{}
 	// 获取shibor均值数据
 	case ShiborMa:
 		params.Add("year", c.PostForm("year"))
-		api.Config.UriPath = library.UrlBankShiborMa
+		api.Config.UriPath = library.URLBankShiborMa
 		api.Config.DataStruct = &resource.ShiborMa{}
 	// 获取贷款基础利率LPR
 	case Lpr:
 		params.Add("year", c.PostForm("year"))
-		api.Config.UriPath = library.UrlBankLpr
+		api.Config.UriPath = library.URLBankLpr
 		api.Config.DataStruct = &resource.Lpr{}
 	// 获取贷款基础利率均值
 	case LprMa:
 		params.Add("year", c.PostForm("year"))
-		api.Config.UriPath = library.UrlBankLprMa
+		api.Config.UriPath = library.URLBankLprMa
 		api.Config.DataStruct = &resource.LprMa{}
 	default:
 		seelog.Errorf(library.ErrGateway)
@@ -69,7 +69,7 @@ func (api BankAPI) GateWay(c *gin.Context) {
 	}
 
 	api.Config.Params = params
-	result, err = api.Config.doHttp()
+	result, err = api.Config.doPost()
 
 	if err != nil {
 		seelog.Errorf("请求失败，err = %+v\n", err)

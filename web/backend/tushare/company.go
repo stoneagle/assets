@@ -41,43 +41,43 @@ func (api CompanyAPI) GateWay(c *gin.Context) {
 	switch gateway {
 	// 获取上市公司基本情况
 	case StockBasic:
-		api.Config.UriPath = library.UrlCompanyStockBasic
+		api.Config.UriPath = library.URLCompanyStockBasic
 		api.Config.DataStruct = &resource.StockBasic{}
 	// 获取盈利能力
 	case CompanyProfit:
 		params.Add("year", c.PostForm("year"))
 		params.Add("season", c.PostForm("season"))
-		api.Config.UriPath = library.UrlCompanyProfit
+		api.Config.UriPath = library.URLCompanyProfit
 		api.Config.DataStruct = &resource.CompanyProfit{}
 	// 获取业绩报告
 	case CompanyReport:
 		params.Add("year", c.PostForm("year"))
 		params.Add("season", c.PostForm("season"))
-		api.Config.UriPath = library.UrlCompanyReport
+		api.Config.UriPath = library.URLCompanyReport
 		api.Config.DataStruct = &resource.CompanyReport{}
 	// 获取营运能力
 	case Operation:
 		params.Add("year", c.PostForm("year"))
 		params.Add("season", c.PostForm("season"))
-		api.Config.UriPath = library.UrlCompanyOperation
+		api.Config.UriPath = library.URLCompanyOperation
 		api.Config.DataStruct = &resource.Operation{}
 	// 获取成长能力
 	case Growth:
 		params.Add("year", c.PostForm("year"))
 		params.Add("season", c.PostForm("season"))
-		api.Config.UriPath = library.UrlCompanyGrowth
+		api.Config.UriPath = library.URLCompanyGrowth
 		api.Config.DataStruct = &resource.Growth{}
 	// 获取现金流量
 	case Cashflow:
 		params.Add("year", c.PostForm("year"))
 		params.Add("season", c.PostForm("season"))
-		api.Config.UriPath = library.UrlCompanyCashflow
+		api.Config.UriPath = library.URLCompanyCashflow
 		api.Config.DataStruct = &resource.Cashflow{}
 	// 获取偿债能力
 	case DebtPaying:
 		params.Add("year", c.PostForm("year"))
 		params.Add("season", c.PostForm("season"))
-		api.Config.UriPath = library.UrlCompanyDebt
+		api.Config.UriPath = library.URLCompanyDebt
 		api.Config.DataStruct = &resource.DebtPaying{}
 	default:
 		seelog.Errorf(library.ErrGateway)
@@ -86,7 +86,7 @@ func (api CompanyAPI) GateWay(c *gin.Context) {
 	}
 
 	api.Config.Params = params
-	result, err = api.Config.doHttp()
+	result, err = api.Config.doPost()
 
 	if err != nil {
 		seelog.Errorf("请求失败，err = %+v\n", err)

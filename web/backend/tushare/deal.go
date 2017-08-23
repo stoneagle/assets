@@ -48,7 +48,7 @@ func (d DealAPI) GateWay(c *gin.Context) {
 		params.Add("end", c.PostForm("end"))
 		params.Add("ktype", c.DefaultPostForm("ktype", "D"))
 		params.Add("autype", c.DefaultPostForm("autype", "qfq"))
-		d.Config.UriPath = library.UrlDealK
+		d.Config.UriPath = library.URLDealK
 		d.Config.DataStruct = &resource.KData{}
 	// 获取历史数据
 	case Hist:
@@ -56,36 +56,36 @@ func (d DealAPI) GateWay(c *gin.Context) {
 		params.Add("start", c.PostForm("start"))
 		params.Add("end", c.PostForm("end"))
 		params.Add("ktype", c.DefaultPostForm("ktype", "D"))
-		d.Config.UriPath = library.UrlDealHist
+		d.Config.UriPath = library.URLDealHist
 		d.Config.DataStruct = &resource.HistoryData{}
 	// 获取当前交易所有股票的行情数据（如果是节假日，即为上一交易日
 	case TodayAll:
 		// TODO，接口不稳定，返回错误
 		params.Add("code", c.PostForm("code"))
 		params.Add("date", c.PostForm("date"))
-		d.Config.UriPath = library.UrlDealTodayAll
+		d.Config.UriPath = library.URLDealTodayAll
 		d.Config.DataStruct = &resource.TodayAll{}
 	// 获取当前交易日（交易进行中使用）已经产生的分笔明细
 	case TodayTick:
 		params.Add("code", c.PostForm("code"))
-		d.Config.UriPath = library.UrlDealTodayTick
+		d.Config.UriPath = library.URLDealTodayTick
 		d.Config.DataStruct = &resource.TodayTick{}
 	// 获取大盘指数行情列表
 	case Index:
-		d.Config.UriPath = library.UrlDealIndex
+		d.Config.UriPath = library.URLDealIndex
 		d.Config.DataStruct = &resource.Index{}
 	// 获取大单交易数据，默认为大于等于400手
 	case SinaDD:
 		params.Add("code", c.PostForm("code"))
 		params.Add("date", c.PostForm("date"))
 		params.Add("vol", c.DefaultPostForm("vol", "400"))
-		d.Config.UriPath = library.UrlDealSinaDD
+		d.Config.UriPath = library.URLDealSinaDD
 		d.Config.DataStruct = &resource.SinaDD{}
 	// 获取个股以往交易历史的分笔数据明细
 	case Tick:
 		params.Add("code", c.PostForm("code"))
 		params.Add("date", c.PostForm("date"))
-		d.Config.UriPath = library.UrlDealTick
+		d.Config.UriPath = library.URLDealTick
 		d.Config.DataStruct = &resource.TickData{}
 	// 获取实时分笔数据，可以实时取得股票当前报价和成交信息
 	case RealTimeQuotes:
@@ -96,7 +96,7 @@ func (d DealAPI) GateWay(c *gin.Context) {
 		for _, v := range c.Request.MultipartForm.Value["symbols"] {
 			params.Add("symbols", v)
 		}
-		d.Config.UriPath = library.UrlDealRTQuotes
+		d.Config.UriPath = library.URLDealRTQuotes
 		d.Config.DataStruct = &resource.RealTimeQuote{}
 	default:
 		seelog.Errorf(library.ErrGateway)
@@ -105,7 +105,7 @@ func (d DealAPI) GateWay(c *gin.Context) {
 	}
 
 	d.Config.Params = params
-	result, err = d.Config.doHttp()
+	result, err = d.Config.doPost()
 
 	if err != nil {
 		seelog.Errorf("请求失败，err = %+v\n", err)
