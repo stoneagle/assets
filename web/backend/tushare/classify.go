@@ -2,15 +2,17 @@ package tushare
 
 import (
 	"assets/web/backend/library"
+	"assets/web/backend/tushare/model"
 	"assets/web/backend/tushare/resource"
 	"encoding/json"
 	"fmt"
 	"net/url"
 	"regexp"
 	"strings"
+	"time"
 
 	"github.com/cihub/seelog"
-	iconv "github.com/djimenez/iconv-go"
+	iconvgo "github.com/djimenez/iconv-go"
 	"github.com/gin-gonic/gin"
 	"github.com/mitchellh/mapstructure"
 )
@@ -41,7 +43,7 @@ func NewClassifyAPI() *ClassifyAPI {
 }
 
 // 根据tag检查并更新分类详情
-func checkDetailByTag(tag string, classifyName string, config Configuration) {
+func checkDetailByTag(tag string, classifyName string, config Configuration, DetailType int) {
 	host := library.SchemeHttp + library.URLSinaIndexDetail
 	host = fmt.Sprintf(host, tag)
 	body, err := config.doGet(host)
@@ -49,33 +51,55 @@ func checkDetailByTag(tag string, classifyName string, config Configuration) {
 		seelog.Errorf("err = %+v\n", err)
 		return
 	}
+	// 解析sina返回的数据
 	dataStr := string(body)
 	reg := regexp.MustCompile(`\,(.*?)\:`)
 	dataStr = reg.ReplaceAllString(dataStr, ",\"${1}\":")
 	dataStr = strings.Replace(dataStr, "\"{symbol", "{\"symbol", -1)
 	dataStr = strings.Replace(dataStr, "{symbol", "{\"symbol\"", -1)
-	dataStrDecode, err := iconv.ConvertString(dataStr, "GB2312", "utf-8")
+	dataStrDecode, err := iconvgo.ConvertString(dataStr, "GB2312", "utf-8")
 	var detail []resource.SinaSimple
 	err = json.Unmarshal([]byte(dataStrDecode), &detail)
 	if err != nil {
-		seelog.Errorf("index解析错误，err = %+v\n", err)
+		seelog.Errorf("Type:%d,Tag:%s的detail解析错误，err = %+v\n", DetailType, tag, err)
 		return
 	}
+
+	// 与DB中的数据进行对比
+	db := model.NewClassifyModel(config.SqlDB)
+	dbData := db.GetNumByTag(tag, 500)
+
 	for _, v := range detail {
-		fmt.Printf("code = %+v\n", v.Code)
-		fmt.Printf("name = %+v\n", v.Name)
+		_, ok := dbData[v.Code]
+		if ok != true {
+			newData := &model.Classify{
+				Type:    DetailType,
+				Name:    v.Name,
+				Code:    v.Code,
+				Tag:     tag,
+				TagName: classifyName,
+			}
+			db.Insert(newData)
+		} else {
+			continue
+		}
 	}
 	return
 }
 
 // 检查分类索引
 func checkIndex(body []byte) (ret map[string]string) {
+	ret = make(map[string]string)
 	dataStr := string(body)
-	strDecode, err := iconv.ConvertString(dataStr, "GB2312", "utf-8")
+	// GB2312会报Invalid or incomplete multibyte or wide character错误
+	strDecode, err := iconvgo.ConvertString(dataStr, "GBK", "utf-8")
 	if err != nil {
-		seelog.Errorf("err = %+v\n", err)
+		seelog.Errorf("decode错误 err = %+v\n", err)
 		return
 	}
+	// 备用解码方案
+	// enc := mahonia.NewDecoder("gbk")
+	// strDecode := enc.ConvertString(dataStr)
 	data := strings.Split(strDecode, "=")
 	if len(data) >= 2 {
 		var dataDetail map[string]string
@@ -85,14 +109,15 @@ func checkIndex(body []byte) (ret map[string]string) {
 			return
 		}
 		for tag, v := range dataDetail {
-			vDetail := strings.Split(string(v), ",")
+			vRaw := strings.Split(string(v), " ")
+			vDetail := strings.Split(vRaw[0], ",")
 			ret[tag] = vDetail[1]
 		}
 	}
 	return
 }
 
-// CheckIndustry 检测产业分类，并储存
+// CheckIndustry 检测产业分类，并储存新条目
 func (api ClassifyAPI) CheckIndustry() (err error) {
 	host := library.SchemeHttp + library.URLSinaIndustryIndex
 	body, err := api.Config.doGet(host)
@@ -102,12 +127,15 @@ func (api ClassifyAPI) CheckIndustry() (err error) {
 	}
 	tagMap := checkIndex(body)
 	for tag, classifyName := range tagMap {
-		checkDetailByTag(tag, classifyName, api.Config)
+		seelog.Infof("工业分类tag:%s校验开始\n", tag)
+		checkDetailByTag(tag, classifyName, api.Config, model.TypeIndustry)
+		// 为了避免被加黑，需要添加延时
+		time.Sleep(library.URLSinaSleep)
 	}
 	return
 }
 
-// CheckConcept 检测概念分类，并储存
+// CheckConcept 检测概念分类，并储存新条目
 func (api ClassifyAPI) CheckConcept() (err error) {
 	host := library.SchemeHttp + library.URLSinaConceptIndex
 	body, err := api.Config.doGet(host)
@@ -117,7 +145,10 @@ func (api ClassifyAPI) CheckConcept() (err error) {
 	}
 	tagMap := checkIndex(body)
 	for tag, classifyName := range tagMap {
-		checkDetailByTag(tag, classifyName, api.Config)
+		seelog.Infof("概念分类tag:%s校验开始\n", tag)
+		checkDetailByTag(tag, classifyName, api.Config, model.TypeConcept)
+		// 为了避免被加黑，需要添加延时
+		time.Sleep(library.URLSinaSleep)
 	}
 	return
 }
@@ -204,5 +235,28 @@ func (api ClassifyAPI) GateWay(c *gin.Context) {
 }
 
 func (api ClassifyAPI) GateJob(c *gin.Context) {
+	gateway := c.Param("gateway")
+	var err error
+	switch gateway {
+	//TODO 需要加锁
+	case Concept:
+		err = api.CheckConcept()
+	case Industry:
+		err = api.CheckIndustry()
+	default:
+		seelog.Errorf(library.ErrGateway)
+		library.OutputErr(c, err, 401)
+		return
+	}
 
+	if err != nil {
+		seelog.Errorf("任务失败，err = %+v\n", err)
+		library.OutputErr(c, err, 401)
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"data": struct{}{},
+		"msg":  "任务已完成",
+	})
 }

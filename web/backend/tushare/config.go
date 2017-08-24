@@ -10,6 +10,8 @@ import (
 	"strings"
 
 	"github.com/cihub/seelog"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/jmoiron/sqlx"
 )
 
 type ResponseData struct {
@@ -28,12 +30,18 @@ type Configuration struct {
 	UriPath    string `json:"uriPath,omitempty"`
 	DataStruct interface{}
 	Params     url.Values
+	SqlDB      *sqlx.DB
 }
 
 func NewConfig() *Configuration {
+	db, err := sqlx.Connect("mysql", "root:z20138502@wzy-360@tcp(123.207.151.42:3306)/asset")
+	if err != nil {
+		seelog.Errorf("db初始化失败 err = %+v\n", err)
+	}
 	return &Configuration{
 		BasePath: "http://django:8000",
 		UriPath:  "",
+		SqlDB:    db,
 	}
 }
 

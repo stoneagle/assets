@@ -1,5 +1,7 @@
 package library
 
+import "time"
+
 const (
 	ErrGateway = "网关错误"
 
@@ -74,6 +76,7 @@ const (
 	URLSinaIndustryIndex = "vip.stock.finance.sina.com.cn/q/view/newSinaHy.php"
 	URLSinaConceptIndex  = "money.finance.sina.com.cn/q/view/newFLJK.php?param=class"
 	URLSinaIndexDetail   = "vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/Market_Center.getHQNodeData?page=1&num=1000&sort=symbol&asc=1&node=%s&symbol=&_s_r_a=page"
+	URLSinaSleep         = 1000 * time.Microsecond
 
 	SchemeHttp  = "http://"
 	SchemeHttps = "https://"

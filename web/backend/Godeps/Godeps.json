@@ -29,6 +29,10 @@
 			"Rev": "f561c5e57575bb1e0a2167028b7339b3a8d16fb4"
 		},
 		{
+			"ImportPath": "github.com/djimenez/iconv-go",
+			"Rev": "8960e66bd3dacbc8773962b40eb82fc18c63c127"
+		},
+		{
 			"ImportPath": "github.com/gin-gonic/gin",
 			"Comment": "v1.1.4-1-gd5b353c",
 			"Rev": "d5b353c5d5a560322e6d96121c814115562501f7"
@@ -42,6 +46,11 @@
 			"ImportPath": "github.com/gin-gonic/gin/render",
 			"Comment": "v1.1.4-1-gd5b353c",
 			"Rev": "d5b353c5d5a560322e6d96121c814115562501f7"
+		},
+		{
+			"ImportPath": "github.com/go-sql-driver/mysql",
+			"Comment": "v1.3-31-g26471af",
+			"Rev": "26471af196a17ee75a22e6481b5a5897fb16b081"
 		},
 		{
 			"ImportPath": "github.com/golang/protobuf/proto",
@@ -61,6 +70,16 @@
 			"ImportPath": "github.com/influxdata/influxdb/pkg/escape",
 			"Comment": "v1.3.0rc1-25-g206fd85",
 			"Rev": "206fd857c351f61f557821b06c95dd3302150a94"
+		},
+		{
+			"ImportPath": "github.com/jmoiron/sqlx",
+			"Comment": "sqlx-v1.1-123-gd9bd385",
+			"Rev": "d9bd385d68c068f1fabb5057e3dedcbcbb039d0f"
+		},
+		{
+			"ImportPath": "github.com/jmoiron/sqlx/reflectx",
+			"Comment": "sqlx-v1.1-123-gd9bd385",
+			"Rev": "d9bd385d68c068f1fabb5057e3dedcbcbb039d0f"
 		},
 		{
 			"ImportPath": "github.com/manucorporat/sse",
