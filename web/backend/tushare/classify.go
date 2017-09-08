@@ -5,6 +5,7 @@ import (
 	"assets/web/backend/tushare/model"
 	"assets/web/backend/tushare/resource"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/url"
 	"regexp"
@@ -43,48 +44,61 @@ func NewClassifyAPI() *ClassifyAPI {
 }
 
 // 根据tag检查并更新分类详情
-func checkDetailByTag(tag string, classifyName string, config Configuration, DetailType int) {
+func checkDetailByTag(tag string, cid int, config Configuration) bool {
 	host := library.SchemeHttp + library.URLSinaIndexDetail
 	host = fmt.Sprintf(host, tag)
-	body, err := config.doGet(host)
-	if err != nil {
-		seelog.Errorf("err = %+v\n", err)
-		return
-	}
-	// 解析sina返回的数据
-	dataStr := string(body)
-	reg := regexp.MustCompile(`\,(.*?)\:`)
-	dataStr = reg.ReplaceAllString(dataStr, ",\"${1}\":")
-	dataStr = strings.Replace(dataStr, "\"{symbol", "{\"symbol", -1)
-	dataStr = strings.Replace(dataStr, "{symbol", "{\"symbol\"", -1)
-	dataStrDecode, err := iconvgo.ConvertString(dataStr, "GB2312", "utf-8")
+	_flag := true
+	num := 0
 	var detail []resource.SinaSimple
-	err = json.Unmarshal([]byte(dataStrDecode), &detail)
-	if err != nil {
-		seelog.Errorf("Type:%d,Tag:%s的detail解析错误，err = %+v\n", DetailType, tag, err)
-		return
+	// 重试三次
+	for _flag && (num < library.URLSinaRetryNum) {
+		num = num + 1
+		body, err := config.doGet(host)
+		if err != nil {
+			seelog.Infof("Tag:%s, 第%d次get请求失败，err = %+v", tag, num, err)
+			// 为了避免被加黑，需要添加延时
+			time.Sleep(library.URLSinaSleep)
+			continue
+		}
+		// 解析sina返回的数据
+		dataStr := string(body)
+		reg := regexp.MustCompile(`\,(.*?)\:`)
+		dataStr = reg.ReplaceAllString(dataStr, ",\"${1}\":")
+		dataStr = strings.Replace(dataStr, "\"{symbol", "{\"symbol", -1)
+		dataStr = strings.Replace(dataStr, "{symbol", "{\"symbol\"", -1)
+		dataStrDecode, err := iconvgo.ConvertString(dataStr, "GB2312", "utf-8")
+		err = json.Unmarshal([]byte(dataStrDecode), &detail)
+		if err != nil {
+			seelog.Infof("Tag:%s，第%d次detail解析错误，err = %+v", tag, num, err)
+			// 为了避免被加黑，需要添加延时
+			time.Sleep(library.URLSinaSleep)
+			continue
+		}
+		_flag = false
+	}
+
+	if _flag != false {
+		return false
 	}
 
 	// 与DB中的数据进行对比
-	db := model.NewClassifyModel(config.SqlDB)
-	dbData := db.GetNumByTag(tag, 500)
+	db := model.NewClassifyDetailModel(config.SqlDB)
+	dbData := db.GetNumByClassify(cid, 500)
 
 	for _, v := range detail {
 		_, ok := dbData[v.Code]
 		if ok != true {
-			newData := &model.Classify{
-				Type:    DetailType,
-				Name:    v.Name,
-				Code:    v.Code,
-				Tag:     tag,
-				TagName: classifyName,
+			newData := &model.ClassifyDetail{
+				Name:       v.Name,
+				ClassifyID: cid,
+				Code:       v.Code,
 			}
 			db.Insert(newData)
 		} else {
 			continue
 		}
 	}
-	return
+	return true
 }
 
 // 检查分类索引
@@ -94,7 +108,7 @@ func checkIndex(body []byte) (ret map[string]string) {
 	// GB2312会报Invalid or incomplete multibyte or wide character错误
 	strDecode, err := iconvgo.ConvertString(dataStr, "GBK", "utf-8")
 	if err != nil {
-		seelog.Errorf("decode错误 err = %+v\n", err)
+		seelog.Errorf("decode错误 err = %+v, 原数据:%s", err, dataStr)
 		return
 	}
 	// 备用解码方案
@@ -105,7 +119,7 @@ func checkIndex(body []byte) (ret map[string]string) {
 		var dataDetail map[string]string
 		err := json.Unmarshal([]byte(data[1]), &dataDetail)
 		if err != nil {
-			seelog.Errorf("json解析错误，err = %+v\n", err)
+			seelog.Errorf("json解析错误，err = %+v，原数据:%s", err, data[1])
 			return
 		}
 		for tag, v := range dataDetail {
@@ -117,38 +131,60 @@ func checkIndex(body []byte) (ret map[string]string) {
 	return
 }
 
-// CheckIndustry 检测产业分类，并储存新条目
-func (api ClassifyAPI) CheckIndustry() (err error) {
-	host := library.SchemeHttp + library.URLSinaIndustryIndex
-	body, err := api.Config.doGet(host)
-	if err != nil {
-		seelog.Errorf("err = %+v\n", err)
-		return err
-	}
-	tagMap := checkIndex(body)
-	for tag, classifyName := range tagMap {
-		seelog.Infof("工业分类tag:%s校验开始\n", tag)
-		checkDetailByTag(tag, classifyName, api.Config, model.TypeIndustry)
-		// 为了避免被加黑，需要添加延时
-		time.Sleep(library.URLSinaSleep)
-	}
-	return
-}
+// CheckClassify 检测对应分类，并储存新条目
+func (api ClassifyAPI) CheckClassify(host string, typeName string, classifyType int) (err error) {
+	// 解锁
+	defer model.NewLockModel(api.Config.SqlDB).UpdateByType(model.LockTypeClassify, model.LockStatusOff)
 
-// CheckConcept 检测概念分类，并储存新条目
-func (api ClassifyAPI) CheckConcept() (err error) {
-	host := library.SchemeHttp + library.URLSinaConceptIndex
 	body, err := api.Config.doGet(host)
 	if err != nil {
-		seelog.Errorf("err = %+v\n", err)
-		return err
+		seelog.Errorf("err = %+v", err)
+		return
 	}
 	tagMap := checkIndex(body)
+	db := model.NewClassifyModel(api.Config.SqlDB)
+	dbData := db.GetNumByType(classifyType, 500)
+	var errorTag []string
 	for tag, classifyName := range tagMap {
-		seelog.Infof("概念分类tag:%s校验开始\n", tag)
-		checkDetailByTag(tag, classifyName, api.Config, model.TypeConcept)
+		var cid int
+		_, ok := dbData[tag]
+		if ok != true {
+			newData := &model.Classify{
+				Type: classifyType,
+				Tag:  tag,
+				Name: classifyName,
+			}
+			cid = int(db.Insert(newData))
+		} else {
+			cid = dbData[tag].ID
+		}
+		seelog.Infof(typeName+"tag:%s校验开始", tag)
+		_retryFlag := false
+		num := 0
+		for (_retryFlag != true) && (num < library.URLSinaRetryNum) {
+			num++
+			_retryFlag = checkDetailByTag(tag, cid, api.Config)
+		}
+		if _retryFlag != true {
+			errorTag = append(errorTag, tag)
+		}
+		// 错误超出一定次数，退出这次任务
+		if len(errorTag) > library.URLSinaFailBreakNum {
+			break
+		}
 		// 为了避免被加黑，需要添加延时
 		time.Sleep(library.URLSinaSleep)
+	}
+	seelog.Infof(typeName + "校验任务完成")
+	if len(errorTag) > 0 {
+		errorTagStr := strings.Join(errorTag, ",")
+		seelog.Errorf(typeName+"以下tag添加失败 : %+v", errorTagStr)
+		newRetry := &model.ClassifyRetry{
+			Status: model.ClassifyRetryWait,
+			Type:   classifyType,
+			Code:   errorTagStr,
+		}
+		_ = int(model.NewClassifyRetryModel(api.Config.SqlDB).Insert(newRetry))
 	}
 	return
 }
@@ -215,7 +251,7 @@ func (api ClassifyAPI) GateWay(c *gin.Context) {
 	result, err = api.Config.doPost()
 
 	if err != nil {
-		seelog.Errorf("请求失败，err = %+v\n", err)
+		seelog.Errorf("请求失败，err = %+v", err)
 		library.OutputErr(c, err, 401)
 		return
 	}
@@ -223,7 +259,7 @@ func (api ClassifyAPI) GateWay(c *gin.Context) {
 	data := api.Config.DataStruct
 	err = mapstructure.Decode(result.Data, &data)
 	if err != nil {
-		seelog.Errorf("data转换失败，err = %+v\n", err)
+		seelog.Errorf("data转换失败，err = %+v", err)
 		library.OutputErr(c, err, 401)
 		return
 	}
@@ -235,28 +271,42 @@ func (api ClassifyAPI) GateWay(c *gin.Context) {
 }
 
 func (api ClassifyAPI) GateJob(c *gin.Context) {
-	gateway := c.Param("gateway")
+	gateway := c.Param("gatejob")
 	var err error
 	switch gateway {
 	//TODO 需要加锁
 	case Concept:
-		err = api.CheckConcept()
+		// 异步协程上下文的备份
+		// ccp := c.Copy()
+		_lockFlag := model.NewLockModel(api.Config.SqlDB).CheckByType(model.LockTypeClassify)
+		if _lockFlag == true {
+			err = errors.New(library.ErrJobLock)
+		} else {
+			model.NewLockModel(api.Config.SqlDB).UpdateByType(model.LockTypeClassify, model.LockStatusOn)
+			host := library.SchemeHttp + library.URLSinaConceptIndex
+			go api.CheckClassify(host, "概念分类", model.ClassifyTypeConcept)
+		}
 	case Industry:
-		err = api.CheckIndustry()
+		_lockFlag := model.NewLockModel(api.Config.SqlDB).CheckByType(model.LockTypeClassify)
+		if _lockFlag == true {
+			err = errors.New(library.ErrJobLock)
+		} else {
+			model.NewLockModel(api.Config.SqlDB).UpdateByType(model.LockTypeClassify, model.LockStatusOn)
+			host := library.SchemeHttp + library.URLSinaIndustryIndex
+			go api.CheckClassify(host, "工业分类", model.ClassifyTypeIndustry)
+		}
 	default:
-		seelog.Errorf(library.ErrGateway)
-		library.OutputErr(c, err, 401)
-		return
+		err = errors.New(library.ErrGateway)
 	}
 
 	if err != nil {
-		seelog.Errorf("任务失败，err = %+v\n", err)
+		seelog.Errorf("任务启动失败，err = %+v", err)
 		library.OutputErr(c, err, 401)
 		return
 	}
 
 	c.JSON(200, gin.H{
 		"data": struct{}{},
-		"msg":  "任务已完成",
+		"msg":  "任务已启动",
 	})
 }

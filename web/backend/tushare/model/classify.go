@@ -6,47 +6,37 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-var schema = `
-CREATE TABLE classify (
-   id int(16) unsigned NOT NULL AUTO_INCREMENT,
-   type tinyint(4) unsigned NOT NULL,
-   tag char(128) NOT NULL,
-   name char(128) NOT NULL,
-   code char(32) NOT NULL,
-   PRIMARY KEY (id)
- ) ENGINE=InnoDB DEFAULT CHARSET=utf8
-`
+var classifySchema = ``
+
+const (
+	TableClassify        = "classify"
+	ClassifyTypeIndustry = 1
+	ClassifyTypeConcept  = 2
+)
 
 type Classify struct {
-	ID      int    `db:"id"`
-	Type    int    `db:"type"`
-	Tag     string `db:"tag"`
-	TagName string `db:"tag_name"`
-	Name    string `db:"name"`
-	Code    string `db:"code"`
+	ID   int    `db:"id"`
+	Type int    `db:"type"`
+	Tag  string `db:"tag"`
+	Name string `db:"name"`
 }
 
-type SqlAPI struct {
+type ClassifyAPI struct {
 	Model *sqlx.DB
 }
 
-const (
-	TypeIndustry = 1
-	TypeConcept  = 2
-)
-
-func NewClassifyModel(DB *sqlx.DB) *SqlAPI {
-	return &SqlAPI{
+func NewClassifyModel(DB *sqlx.DB) *ClassifyAPI {
+	return &ClassifyAPI{
 		Model: DB,
 	}
 }
 
-func (api SqlAPI) Insert(param *Classify) int64 {
-	stmt, err := api.Model.Prepare("INSERT classify SET type=?,tag=?,name=?,code=?,tag_name=?")
+func (api ClassifyAPI) Insert(param *Classify) int64 {
+	stmt, err := api.Model.Prepare("INSERT " + TableClassify + " SET type=?,tag=?,name=?")
 	if err != nil {
 		panic(err)
 	}
-	res, err := stmt.Exec(param.Type, param.Tag, param.Name, param.Code, param.TagName)
+	res, err := stmt.Exec(param.Type, param.Tag, param.Name)
 	if err != nil {
 		panic(err)
 	}
@@ -57,13 +47,13 @@ func (api SqlAPI) Insert(param *Classify) int64 {
 	return id
 }
 
-func (api SqlAPI) Update(param *Classify) int64 {
-	stmt, err := api.Model.Prepare("update classify set tag=?,name=?,code=?,tag_name=? where id=?")
+func (api ClassifyAPI) Update(param *Classify) int64 {
+	stmt, err := api.Model.Prepare("update " + TableClassify + " set type=?,name=?,tag=? where id=?")
 	if err != nil {
 		panic(err)
 	}
 
-	res, err := stmt.Exec(param.Tag, param.Name, param.Code, param.TagName, param.ID)
+	res, err := stmt.Exec(param.Type, param.Name, param.Tag, param.ID)
 	if err != nil {
 		panic(err)
 	}
@@ -75,8 +65,8 @@ func (api SqlAPI) Update(param *Classify) int64 {
 	return affect
 }
 
-func (api SqlAPI) Delete(param *Classify) int64 {
-	stmt, err := api.Model.Prepare("delete from classify where id=?")
+func (api ClassifyAPI) Delete(param *Classify) int64 {
+	stmt, err := api.Model.Prepare("delete from " + TableClassify + " where id=?")
 	if err != nil {
 		panic(err)
 	}
@@ -93,16 +83,17 @@ func (api SqlAPI) Delete(param *Classify) int64 {
 	return affect
 }
 
-func (api SqlAPI) GetNumByTag(tag string, limit int) map[string]Classify {
+func (api ClassifyAPI) GetNumByType(tid, limit int) map[string]Classify {
 	ret := []Classify{}
 	limitStr := strconv.Itoa(limit)
-	err := api.Model.Select(&ret, "select * from classify where tag = '"+tag+"' limit "+limitStr)
+	tidStr := strconv.Itoa(tid)
+	err := api.Model.Select(&ret, "select * from "+TableClassify+" where type = "+tidStr+" limit "+limitStr)
 	if err != nil {
 		panic(err)
 	}
 	result := map[string]Classify{}
 	for _, v := range ret {
-		result[v.Code] = v
+		result[v.Tag] = v
 	}
 	return result
 }

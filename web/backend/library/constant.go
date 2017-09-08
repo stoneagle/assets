@@ -4,6 +4,7 @@ import "time"
 
 const (
 	ErrGateway = "网关错误"
+	ErrJobLock = "任务已上锁"
 
 	URLDealK         = "/deal/getKData"
 	URLDealHist      = "/deal/getHistData"
@@ -77,7 +78,8 @@ const (
 	URLSinaConceptIndex  = "money.finance.sina.com.cn/q/view/newFLJK.php?param=class"
 	URLSinaIndexDetail   = "vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/Market_Center.getHQNodeData?page=1&num=1000&sort=symbol&asc=1&node=%s&symbol=&_s_r_a=page"
 	URLSinaSleep         = 1000 * time.Microsecond
-
-	SchemeHttp  = "http://"
-	SchemeHttps = "https://"
+	URLSinaRetryNum      = 3
+	URLSinaFailBreakNum  = 10
+	SchemeHttp           = "http://"
+	SchemeHttps          = "https://"
 )
