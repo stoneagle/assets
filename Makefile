@@ -6,11 +6,21 @@ GROUP := $(shell id -g)
 PROJECT := assets
 
 run-web: 
-	cd hack && sudo docker-compose -p "$(PROJECT)-$(USER)" up
+	cd hack && docker-compose -p "$(PROJECT)-web-$(USER)" up
 stop-web: 
-	cd hack && sudo docker-compose -p "$(PROJECT)-$(USER)" stop 
+	cd hack && docker-compose -p "$(PROJECT)-web-$(USER)" stop 
 rm-web: 
-	cd hack && sudo docker-compose -p "$(PROJECT)-$(USER)" rm 
+	cd hack && docker-compose -p "$(PROJECT)-web-$(USER)" rm 
+
+run-etl-local: 
+	cd airflow && docker-compose -f ./docker-compose-local.yml -p "$(PROJECT)-airflow-$(USER)" up
+stop-etl-local: 
+	cd airflow && docker-compose -f ./docker-compose-local.yml -p "$(PROJECT)-airflow-$(USER)" stop 
+rm-etl-local: 
+	cd airflow && docker-compose -f ./docker-compose-local.yml -p "$(PROJECT)-airflow-$(USER)" rm 
+
+build-airflow-ts:
+	cd airflow/dockerfile && docker build -f ./Dockerfile-tushare -t puckel/docker-airflow:1.8.2-ts .
 
 ag-ng: 
 	docker run -it --rm \
