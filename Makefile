@@ -13,14 +13,14 @@ rm-web:
 	cd hack && docker-compose -p "$(PROJECT)-web-$(USER)" rm 
 
 run-etl-local: 
-	cd airflow && docker-compose -f ./docker-compose-local.yml -p "$(PROJECT)-airflow-$(USER)" up
+	cd airflow && docker-compose -f ./docker-compose-local.yml -p "$(PROJECT)-airflow-$(USER)" up -d
 stop-etl-local: 
 	cd airflow && docker-compose -f ./docker-compose-local.yml -p "$(PROJECT)-airflow-$(USER)" stop 
 rm-etl-local: 
 	cd airflow && docker-compose -f ./docker-compose-local.yml -p "$(PROJECT)-airflow-$(USER)" rm 
 
-build-airflow-ts:
-	cd airflow/dockerfile && docker build -f ./Dockerfile-tushare -t puckel/docker-airflow:1.8.2-ts .
+build-airflow-assets:
+	cd airflow/dockerfile && docker build -f ./Dockerfile-assets -t puckel/docker-airflow:1.8.2-assets2 .
 
 ag-ng: 
 	docker run -it --rm \

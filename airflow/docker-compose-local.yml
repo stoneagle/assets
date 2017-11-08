@@ -1,7 +1,7 @@
 version: '2'
 services:
   postgres:
-    image: r.qihoo.cloud/library/postgres:9.6.1
+    image: postgres:9.6
     container_name: airflow-local-postgres-${DEV_USER}
     environment:
       - POSTGRES_USER=airflow
@@ -10,20 +10,21 @@ services:
     networks:
       - default
   webserver:
-    image: puckel/docker-airflow:1.8.2-ts
+    image: puckel/docker-airflow:1.8.2-assets
     container_name: airflow-local-server-${DEV_USER}
     restart: always
     depends_on:
         - postgres
     environment:
-        # - LOAD_EX=n
+        - LOAD_EX=n
         - EXECUTOR=Local
     volumes:
         - ./dags:/usr/local/airflow/dags
-        - ./requirements.txt:/requirements.txt
+        # - ./config/airflow.cfg:/usr/local/airflow/airflow.cfg
+        # - ./requirements.txt:/requirements.txt
     ports:
         - "${DEV_PORT}:8080"
-    command: webserver
+    command: "/entrypoint.sh webserver"
     networks:
       - default
 networks:
