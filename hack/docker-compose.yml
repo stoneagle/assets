@@ -1,29 +1,40 @@
 version: '2'
 services:
-  django:
-    image: django:tushare
-    container_name: ${COMPOSE_PROJECT_NAME}-${DEV_USER}-django
-    volumes:
-      - ../web/source:/usr/src/app
-    working_dir: /usr/src/app
-    entrypoint: 
-      - bash 
-      - entrypoint.sh  
-    expose:
-      - "8000"
-    # ports:
-    #   - "${DEV_TS_PORT}:8000"
-  influxdb:
+  # django:
+  #   image: django:tushare
+  #   container_name: ${COMPOSE_PROJECT_NAME}-${DEV_USER}-django
+  #   volumes:
+  #     - ../web/source:/usr/src/app
+  #   working_dir: /usr/src/app
+  #   entrypoint: 
+  #     - bash 
+  #     - entrypoint.sh  
+  #   expose:
+  #     - "8000"
+  #   # ports:
+  #   #   - "${DEV_TS_PORT}:8000"
+  # influxdb:
+  #   environment:
+  #     - INFLUXDB_ADMIN_ENABLED=true
+  #   image: influxdb:1.2.4
+  #   container_name: ${COMPOSE_PROJECT_NAME}-${DEV_USER}-influxdb
+  #   volumes:
+  #     - /home/wuzhongyang/database/influxdb:/var/lib/influxdb
+  #     - ./influxdb/influxdb.conf:/etc/influxdb/influxdb.conf
+  #   ports:
+  #     - "8086:8086"
+  #     - "8083:8083"
+  mysql:
     environment:
-      - INFLUXDB_ADMIN_ENABLED=true
-    image: influxdb:1.2.4
-    container_name: ${COMPOSE_PROJECT_NAME}-${DEV_USER}-influxdb
+      - MYSQL_ROOT_PASSWORD=z20138502@wzy-360 
+    image: mysql:5.7.17
+    container_name: ${COMPOSE_PROJECT_NAME}-${DEV_USER}-mysql
     volumes:
-      - ../_storage/influxdb:/var/lib/influxdb
-      - ./influxdb/influxdb.conf:/etc/influxdb/influxdb.conf
+      - /home/wuzhongyang/database/mysql:/var/lib/mysql
     ports:
-      - "8086:8086"
-      - "8083:8083"
+      - "3306:3306"
+    networks:
+      - default
   assest:
     image: golang-beego:1.6.4
     container_name: ${COMPOSE_PROJECT_NAME}-${DEV_USER}-golang
